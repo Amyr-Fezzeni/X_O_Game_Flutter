@@ -1,7 +1,7 @@
 # x_o_game
 
 A new Flutter project.
-
+XO game or tic tac toe game app with ai autoplay system
 ## Getting Started
 
 This project is a starting point for a Flutter application.
