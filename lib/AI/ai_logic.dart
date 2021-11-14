@@ -2,7 +2,7 @@ import 'dart:math';
 import 'decision.dart';
 
 class AI {
-  final List<List<String>> _field;
+  List<List<String>> _field;
   final String _playerChar = "X";
   final String _aiChar = "O";
   late Decision _decision;
@@ -11,7 +11,8 @@ class AI {
 
   Decision getDecision() {
     _makeDecision();
-    print(_field);
+
+  
     return _decision;
   }
 
@@ -60,6 +61,7 @@ class AI {
         _field[r2][c2] == side &&
         _field[r3][c3].isEmpty) {
       _decision = Decision(r3, c3);
+    
       return true;
     }
     if (_field[r1][c1] == side &&
@@ -78,14 +80,15 @@ class AI {
   }
 
   bool _playerHasOneChar() {
-    return _playerHasOneCharInLine(0, 0, 0, 1, 0, 2) ||
+    return 
+        _playerHasOneCharInLine(0, 0, 1, 1, 2, 2) ||
+        _playerHasOneCharInLine(0, 2, 1, 1, 2, 0) ||
+        _playerHasOneCharInLine(0, 0, 0, 1, 0, 2) ||
         _playerHasOneCharInLine(1, 0, 1, 1, 1, 2) ||
         _playerHasOneCharInLine(2, 0, 2, 1, 2, 2) ||
         _playerHasOneCharInLine(0, 0, 1, 0, 2, 0) ||
         _playerHasOneCharInLine(0, 1, 1, 1, 2, 1) ||
-        _playerHasOneCharInLine(0, 2, 1, 2, 2, 2) ||
-        _playerHasOneCharInLine(0, 0, 1, 1, 2, 2) ||
-        _playerHasOneCharInLine(0, 2, 1, 1, 2, 0);
+        _playerHasOneCharInLine(0, 2, 1, 2, 2, 2);
   }
 
   _playerHasOneCharInLine(int r1, int c1, int r2, int c2, int r3, int c3) {

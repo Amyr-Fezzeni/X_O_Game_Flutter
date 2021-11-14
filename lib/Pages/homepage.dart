@@ -36,7 +36,9 @@ class _HomePageState extends State<HomePage> {
           children: [
             SpeedDialChild(
                 backgroundColor: context.watch<ProviderGame>().buttonColor,
-                foregroundColor: context.read<ProviderGame>().nightMode ? Colors.black :Colors.white,
+                foregroundColor: context.read<ProviderGame>().nightMode
+                    ? Colors.black
+                    : Colors.white,
                 child: const Icon(Icons.settings),
                 label: 'Settings',
                 onTap: () {
@@ -47,7 +49,9 @@ class _HomePageState extends State<HomePage> {
                 }),
             SpeedDialChild(
                 backgroundColor: context.watch<ProviderGame>().buttonColor,
-                foregroundColor: context.read<ProviderGame>().nightMode ? Colors.black :Colors.white,
+                foregroundColor: context.read<ProviderGame>().nightMode
+                    ? Colors.black
+                    : Colors.white,
                 child: const Icon(Icons.accessibility_new_sharp),
                 label: 'Change Names',
                 onTap: () async {
@@ -55,9 +59,33 @@ class _HomePageState extends State<HomePage> {
                 }),
             SpeedDialChild(
                 backgroundColor: context.watch<ProviderGame>().buttonColor,
-                foregroundColor: context.read<ProviderGame>().nightMode ? Colors.black :Colors.white,
+                foregroundColor: context.read<ProviderGame>().nightMode
+                    ? Colors.black
+                    : Colors.white,
+                child: const Icon(Icons.android),
+                label: 'Play with JARVIS',
+                onTap: () {
+                  context.read<ProviderGame>().newGame();
+                  context.read<ProviderGame>().gameMode(true);
+                }),
+            SpeedDialChild(
+                backgroundColor: context.watch<ProviderGame>().buttonColor,
+                foregroundColor: context.read<ProviderGame>().nightMode
+                    ? Colors.black
+                    : Colors.white,
+                child: const Icon(Icons.accessibility_new),
+                label: 'Two player mode',
+                onTap: () {
+                  context.read<ProviderGame>().newGame();
+                  context.read<ProviderGame>().gameMode(false);
+                }),
+            SpeedDialChild(
+                backgroundColor: context.watch<ProviderGame>().buttonColor,
+                foregroundColor: context.read<ProviderGame>().nightMode
+                    ? Colors.black
+                    : Colors.white,
                 child: const Icon(Icons.refresh_outlined),
-                label: 'New Game',
+                label: 'Reset Game',
                 onTap: () {
                   context.read<ProviderGame>().resetGame();
                 }),

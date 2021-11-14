@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:x_o_game/Costum%20Widgets/popup.dart';
+import 'package:x_o_game/ai/ai_logic.dart';
+import 'package:x_o_game/ai/decision.dart';
 
 class ProviderGame with ChangeNotifier {
   String player = "X";
@@ -8,7 +9,7 @@ class ProviderGame with ChangeNotifier {
   String player2name = "Player 2";
   int player_1 = 0;
   int player_2 = 0;
-  
+  bool Ai = false;
   Map<int, List<int>> boardDict = {
     0: [0, 0],
     1: [0, 1],
@@ -138,6 +139,11 @@ class ProviderGame with ChangeNotifier {
     return false;
   }
 
+  gameMode(bool) {
+    Ai = bool;
+    ChangeNotifier();
+  }
+
   bool checkDrow() {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
@@ -147,6 +153,13 @@ class ProviderGame with ChangeNotifier {
       }
     }
     return true;
+  }
+
+  newGame() {
+    player_1 = 0;
+    player_2 = 0;
+    player = "O";
+    resetGame();
   }
 
   resetGame() {
@@ -179,6 +192,28 @@ class ProviderGame with ChangeNotifier {
     };
     changePlayer();
     notifyListeners();
+  }
+
+  int getIndex(int i, int j) {
+    if (i == 0 && j == 0) {
+      return 0;
+    } else if (i == 0 && j == 1) {
+      return 1;
+    } else if (i == 0 && j == 2) {
+      return 2;
+    } else if (i == 1 && j == 0) {
+      return 3;
+    } else if (i == 1 && j == 1) {
+      return 4;
+    } else if (i == 1 && j == 2) {
+      return 5;
+    } else if (i == 2 && j == 0) {
+      return 6;
+    } else if (i == 2 && j == 1) {
+      return 7;
+    } else {
+      return 8;
+    }
   }
 
   changePlayerName(String name, int index) {
@@ -240,4 +275,47 @@ class ProviderGame with ChangeNotifier {
     nightMode = !nightMode;
     notifyListeners();
   }
+
+  //Auto play AI
+autoPlay(BuildContext context, int index) async {
+  List<int>? i = boardDict[index];
+  if (board[i![0]][i[1]] == "") {
+    player = "X";
+    board[i[0]][i[1]] = "X";
+    boardColor[index] = Colors.blueGrey;
+    notifyListeners();
+    if (checkWinner()) {
+      await PopUp.showMyDialog(context, "$player1name wins !", true);
+      player_1 += 1;
+      resetGame();
+    } else if (checkDrow()) {
+      await PopUp.showMyDialog(context, "A drow !", true);
+      resetGame();
+    }
+
+    // AI turn
+
+    else {
+      AI jarvis = AI(board);
+      player = "O";
+      Decision d = jarvis.getDecision();
+    
+      board[d.row][d.column] = "O";
+    
+      boardColor[getIndex(d.row, d.column)] = Colors.blueGrey[300];
+      notifyListeners();
+      if (checkWinner()) {
+        await PopUp.showMyDialog(context, "J.A.R.V.I.S wins !", true);
+        player_2 += 1;
+        resetGame();
+      } else if (checkDrow()) {
+        await PopUp.showMyDialog(context, "A drow !", true);
+        resetGame();
+      }
+    }
+  } else {
+    await PopUp.showMyDialog(context, "Invalid choice !", false);
+  }
+  // boardColor[index] = Colors.blueGrey[300];
+}
 }

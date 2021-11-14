@@ -39,6 +39,8 @@ class _MatriceGameState extends State<MatriceGame> {
               ),
               child: TextButton(
                 onPressed: () async {
+                  context.read<ProviderGame>().Ai ?
+                  context.read<ProviderGame>().autoPlay(context, index) :
                   context.read<ProviderGame>().insertValue(context, index);
                 },
                 child: Text(

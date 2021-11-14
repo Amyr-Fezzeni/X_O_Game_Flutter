@@ -16,6 +16,16 @@ class Menu extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Visibility(
+              visible: !context.watch<ProviderGame>().Ai,
+              child: Center(
+                child: Text(
+                    "${context.watch<ProviderGame>().player == "X" ? 
+                      context.watch<ProviderGame>().player1name : 
+                      context.watch<ProviderGame>().player2name} turns !", style: GoogleFonts.nunito(
+                        fontSize: 14,
+                      ),),
+              )),
           Text(
             "${context.watch<ProviderGame>().player1name} : ${context.watch<ProviderGame>().player_1}",
             style: GoogleFonts.nunito(
